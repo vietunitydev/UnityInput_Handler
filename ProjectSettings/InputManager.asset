@@ -197,7 +197,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: joystick 1 analog 0
     descriptiveName:
@@ -518,7 +517,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 1 
-
   - serializedVersion: 3
     m_Name: joystick 2 analog 0
     descriptiveName:
@@ -839,7 +837,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 2 
-
   - serializedVersion: 3
     m_Name: joystick 3 analog 0
     descriptiveName:
@@ -1160,7 +1157,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 3 
-
   - serializedVersion: 3
     m_Name: joystick 4 analog 0
     descriptiveName:
@@ -1481,7 +1477,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 4 
-
   - serializedVersion: 3
     m_Name: joystick 5 analog 0
     descriptiveName:
@@ -1802,7 +1797,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 5 
-
   - serializedVersion: 3
     m_Name: joystick 6 analog 0
     descriptiveName:
@@ -2123,7 +2117,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 6 
-
   - serializedVersion: 3
     m_Name: joystick 7 analog 0
     descriptiveName:
@@ -2444,7 +2437,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 7 
-
   - serializedVersion: 3
     m_Name: joystick 8 analog 0
     descriptiveName:
@@ -2765,7 +2757,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 8 
-
   - serializedVersion: 3
     m_Name: joystick 9 analog 0
     descriptiveName:
@@ -3086,7 +3077,6 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 9 
-
   - serializedVersion: 3
     m_Name: joystick 10 analog 0
     descriptiveName:
@@ -3407,3 +3397,4 @@ InputManager:
     type: 2
     axis: 19
     joyNum: 10 
+  m_UsePhysicalKeys: 0
