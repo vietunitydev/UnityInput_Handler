@@ -11,6 +11,8 @@ public class InputDebuger : MonoBehaviour
     [SerializeField] private float right_Y;
     [SerializeField] private float left_X;
     [SerializeField] private float left_Y;
+    [SerializeField] private float dpad_X;
+    [SerializeField] private float dpad_Y;
 
     private void Update()
     {
@@ -19,5 +21,15 @@ public class InputDebuger : MonoBehaviour
         
         left_X = instance.GetAxisValue(GamepadAxis.LeftHorizontal, 1);
         left_Y = instance.GetAxisValue(GamepadAxis.LeftVertical, 1);
+        
+        dpad_X = instance.GetAxisValue(GamepadAxis.LeftHorizontal, 1);
+        dpad_Y = instance.GetAxisValue(GamepadAxis.LeftVertical, 1);
+
+        var x = instance.GetButton(GamepadButton.Start, 1);
+        var y = instance.GetButton(GamepadButton.BackSelect, 1);
+
+        Debug.Log($"x {x} == y {y}");
+        
+        
     }
 }
