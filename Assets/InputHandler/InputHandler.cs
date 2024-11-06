@@ -430,10 +430,13 @@ public class InputHandler : MonoBehaviour
     {
         if (this.PlayerMappings[playerNumber].OverridesAxisReading)
         {
+            
             return this.PlayerMappings[playerNumber].OverrideAxisReading(axis);
         }
 
         float input = Input.GetAxisRaw(this.PlayerMappings[playerNumber].AxisBindingLookupTable[axis].AxisName);
+        Debug.Log($"--- (Get Axis Value) type {PlayerMappings[playerNumber].GetType()} - name = {PlayerMappings[playerNumber].AxisBindingLookupTable[axis].AxisName} - value = {input}");
+
         //int multiplier = input > this.PlayerMappings[playerNumber].AxisBindingLookupTable[axis].UnpressedValue ? 1 : -1;
         //Make sure that we don't get false positives, due to the deadzone there is on buttons
         //bool valueBiggerThanDeadzone = input > this.PlayerMappings[playerNumber].AxisBindingLookupTable[axis].UnpressedValue + (multiplier * this.PlayerMappings[playerNumber].AxisBindingLookupTable[axis].DeadZoneOffset);
@@ -442,6 +445,7 @@ public class InputHandler : MonoBehaviour
         {
             return 0.0f;
         }
+
         return input * (this.PlayerMappings[playerNumber].AxisBindingLookupTable[axis].Inverted ? -1 : 1);
     }
 
