@@ -430,7 +430,7 @@ public class InputHandler : MonoBehaviour
     {
         if (this.PlayerMappings[playerNumber].OverridesAxisReading)
         {
-            
+            Debug.Log($"--- (Get Axis Value) type {PlayerMappings[playerNumber].GetType()} - name = {PlayerMappings[playerNumber].AxisBindingLookupTable[axis].AxisName}");
             return this.PlayerMappings[playerNumber].OverrideAxisReading(axis);
         }
 
