@@ -14,10 +14,10 @@ public class InputDebuger : MonoBehaviour
 
     private void Update()
     {
-        right_X = instance.GetAxisValue(GamepadAxis.RightHorizontal, 0);
-        right_Y = instance.GetAxisValue(GamepadAxis.RightVertical, 0);
+        right_X = instance.GetAxisValue(GamepadAxis.RightHorizontal, 1);
+        right_Y = instance.GetAxisValue(GamepadAxis.RightVertical, 1);
         
-        left_X = instance.GetAxisValue(GamepadAxis.LeftHorizontal, 0);
-        left_Y = instance.GetAxisValue(GamepadAxis.LeftVertical, 0);
+        left_X = instance.GetAxisValue(GamepadAxis.LeftHorizontal, 1);
+        left_Y = instance.GetAxisValue(GamepadAxis.LeftVertical, 1);
     }
 }
