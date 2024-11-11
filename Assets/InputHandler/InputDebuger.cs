@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Text;
 
 public class InputDebuger : MonoBehaviour
 {
@@ -15,9 +17,20 @@ public class InputDebuger : MonoBehaviour
     [SerializeField] private float dpad_Y;
 
     [SerializeField] private int playerNumber;
+    [SerializeField] Text text;
+    [SerializeField] string[] names;
+
 
     private void Update()
     {
+        StringBuilder bd = new StringBuilder();
+        names = Input.GetJoystickNames();
+        foreach(var name in names){
+            bd.AppendLine("- " + name);
+        }
+
+        text.text = bd.ToString();
+
         right_X = instance.GetAxisValue(GamepadAxis.RightHorizontal, playerNumber);
         right_Y = instance.GetAxisValue(GamepadAxis.RightVertical, playerNumber);
         
@@ -26,16 +39,7 @@ public class InputDebuger : MonoBehaviour
         
         dpad_X = instance.GetAxisValue(GamepadAxis.LeftHorizontal, playerNumber);
         dpad_Y = instance.GetAxisValue(GamepadAxis.LeftVertical, playerNumber);
-        
-        // var ActionEast = instance.GetButton(GamepadButton.ActionEast, playerNumber);
-        // var ActionNorth = instance.GetButton(GamepadButton.ActionNorth, playerNumber);
-        // var ActionWest = instance.GetButton(GamepadButton.ActionWest, playerNumber);
-        // var ActionSouth = instance.GetButton(GamepadButton.ActionSouth, playerNumber);
-        //
-        // var x = instance.GetButton(GamepadButton.Start, playerNumber);
-        // var y = instance.GetButton(GamepadButton.BackSelect, playerNumber);
-        //
-        // Debug.Log($"x {x} == y {y} ");
-        // Debug.Log($"ActionEast {ActionEast} == ActionNorth {ActionNorth} == ActionWest {ActionWest} == ActionNorth {ActionNorth} ");
     }
+    
 }
+
