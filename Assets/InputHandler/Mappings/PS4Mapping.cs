@@ -4,7 +4,7 @@ public class PS4Mapping : InputMapping
 {
     public override List<string> GetControllerAliasses()
     {
-        return new List<string>() { "Wireless Controller" };
+        return new List<string>() { "Wireless controller" };
     }
 
     public override void MapBindings(int deviceNumber)
