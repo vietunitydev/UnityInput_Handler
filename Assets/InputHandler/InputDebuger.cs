@@ -61,7 +61,7 @@ public class InputDebuger : MonoBehaviour
 
         L1 = instance.GetButton(GamepadButton.LeftBumper, playerNumber);
         R1 = instance.GetButton(GamepadButton.RightBumper, playerNumber);
-        // L2 = instance.GetButtonDown(GamepadButton.LeftStickButton, playerNumber);
+        L2 = instance.GetButtonDown(GamepadButton.LeftStickButton, playerNumber);
         R2 = instance.GetButton(GamepadButton.RightStickButton, playerNumber);
     }
     
