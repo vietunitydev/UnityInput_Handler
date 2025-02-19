@@ -100,25 +100,42 @@ public class InputHandler : MonoBehaviour
 
         for (int i = 0; i < devices.Length; i++)
         {
-            if (!string.IsNullOrEmpty(devices[i]))
+            // if (!string.IsNullOrEmpty(devices[i]))
+            // {
+            //     Type typeofInput;
+            //     if (this.NameToInputMappingLookupTable.TryGetValue(devices[i], out typeofInput))
+            //     {
+            //         InputMapping instance = (InputMapping)Activator.CreateInstance(typeofInput);
+            //         instance.OriginalIndex = i;
+            //
+            //         instance.MapBindings(i + 1);
+            //         this.PlayerMappings.Add(instance);
+            //     }
+            //     else
+            //     {
+            //         Debug.Log("Unknown controller device, pray it works as Xbox input");
+            //         Xbox360Mapping mapping = new Xbox360Mapping();
+            //         mapping.OriginalIndex = i;
+            //         mapping.MapBindings(i + 1);
+            //         this.PlayerMappings.Add(mapping);
+            //     }
+            // }
+            Type typeofInput;
+            if (this.NameToInputMappingLookupTable.TryGetValue(devices[i], out typeofInput))
             {
-                Type typeofInput;
-                if (this.NameToInputMappingLookupTable.TryGetValue(devices[i], out typeofInput))
-                {
-                    InputMapping instance = (InputMapping)Activator.CreateInstance(typeofInput);
-                    instance.OriginalIndex = i;
+                InputMapping instance = (InputMapping)Activator.CreateInstance(typeofInput);
+                instance.OriginalIndex = i;
 
-                    instance.MapBindings(i + 1);
-                    this.PlayerMappings.Add(instance);
-                }
-                else
-                {
-                    Debug.Log("Unknown controller device, pray it works as Xbox input");
-                    Xbox360Mapping mapping = new Xbox360Mapping();
-                    mapping.OriginalIndex = i;
-                    mapping.MapBindings(i + 1);
-                    this.PlayerMappings.Add(mapping);
-                }
+                instance.MapBindings(i + 1);
+                this.PlayerMappings.Add(instance);
+            }
+            else
+            {
+                Debug.Log("Unknown controller device, pray it works as Xbox input");
+                Xbox360Mapping mapping = new Xbox360Mapping();
+                mapping.OriginalIndex = i;
+                mapping.MapBindings(i + 1);
+                this.PlayerMappings.Add(mapping);
             }
         }
 
@@ -147,29 +164,51 @@ public class InputHandler : MonoBehaviour
                 
                 Debug.Log($"---(Input Handler) - Has new controller with name {devices[i]}");
 
-                if (!string.IsNullOrEmpty(devices[i]))
+                // if (!string.IsNullOrEmpty(devices[i]))
+                // {
+                //     Type typeofInput;
+                //     if (this.NameToInputMappingLookupTable.TryGetValue(devices[i], out typeofInput))
+                //     {
+                //         Debug.Log($"---(Input Handler) - Has new controller with type {typeofInput}");
+                //         InputMapping instance = (InputMapping)Activator.CreateInstance(typeofInput);
+                //         instance.OriginalIndex = i;
+                //         instance.MapBindings(i + 1);
+                //         this.PlayerMappings.Add(instance);
+                //     }
+                //     else
+                //     {
+                //         Debug.Log("Unknown controller device, pray it works as Xbox input");
+                //         Xbox360Mapping mapping = new Xbox360Mapping();
+                //         mapping.OriginalIndex = i;
+                //         mapping.MapBindings(i + 1);
+                //         this.PlayerMappings.Add(mapping);
+                //     }
+                //     if (OnNewControllerConnected != null)
+                //     {
+                //         OnNewControllerConnected.Invoke(this.PlayerMappings.Count - 1);
+                //     }
+                // }
+                
+                Type typeofInput;
+                if (this.NameToInputMappingLookupTable.TryGetValue(devices[i], out typeofInput))
                 {
-                    Type typeofInput;
-                    if (this.NameToInputMappingLookupTable.TryGetValue(devices[i], out typeofInput))
-                    {
-                        Debug.Log($"---(Input Handler) - Has new controller with type {typeofInput}");
-                        InputMapping instance = (InputMapping)Activator.CreateInstance(typeofInput);
-                        instance.OriginalIndex = i;
-                        instance.MapBindings(i + 1);
-                        this.PlayerMappings.Add(instance);
-                    }
-                    else
-                    {
-                        Debug.Log("Unknown controller device, pray it works as Xbox input");
-                        Xbox360Mapping mapping = new Xbox360Mapping();
-                        mapping.OriginalIndex = i;
-                        mapping.MapBindings(i + 1);
-                        this.PlayerMappings.Add(mapping);
-                    }
-                    if (OnNewControllerConnected != null)
-                    {
-                        OnNewControllerConnected.Invoke(this.PlayerMappings.Count - 1);
-                    }
+                    Debug.Log($"---(Input Handler) - Has new controller with type {typeofInput}");
+                    InputMapping instance = (InputMapping)Activator.CreateInstance(typeofInput);
+                    instance.OriginalIndex = i;
+                    instance.MapBindings(i + 1);
+                    this.PlayerMappings.Add(instance);
+                }
+                else
+                {
+                    Debug.Log("Unknown controller device, pray it works as Xbox input");
+                    Xbox360Mapping mapping = new Xbox360Mapping();
+                    mapping.OriginalIndex = i;
+                    mapping.MapBindings(i + 1);
+                    this.PlayerMappings.Add(mapping);
+                }
+                if (OnNewControllerConnected != null)
+                {
+                    OnNewControllerConnected.Invoke(this.PlayerMappings.Count - 1);
                 }
             }
             yield return new WaitForSeconds(this.CheckForNewControllerTimer);
