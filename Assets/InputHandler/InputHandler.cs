@@ -6,6 +6,7 @@ using UnityEngine;
 
 public enum GamepadButton
 {
+    None = -1,
     ActionSouth = 0,
     ActionEast = 1,
     ActionWest = 2,
@@ -15,7 +16,9 @@ public enum GamepadButton
     BackSelect = 6,
     Start = 7,
     LeftStickButton = 8,
-    RightStickButton = 9
+    RightStickButton = 9,
+    LeftTriggerAsKey = 10,
+    RightTriggerAsKey = 11,
 }
 
 public enum GamepadAxis
@@ -141,12 +144,15 @@ public class InputHandler : MonoBehaviour
                     }
                 }
                 if (alreadyExists) continue;
+                
+                Debug.Log($"---(Input Handler) - Has new controller with name {devices[i]}");
 
                 if (!string.IsNullOrEmpty(devices[i]))
                 {
                     Type typeofInput;
                     if (this.NameToInputMappingLookupTable.TryGetValue(devices[i], out typeofInput))
                     {
+                        Debug.Log($"---(Input Handler) - Has new controller with type {typeofInput}");
                         InputMapping instance = (InputMapping)Activator.CreateInstance(typeofInput);
                         instance.OriginalIndex = i;
                         instance.MapBindings(i + 1);
@@ -243,17 +249,50 @@ public class InputHandler : MonoBehaviour
 
     public bool GetButtonDown(GamepadButton button, int playerNumber)
     {
-        return Input.GetKeyDown(this.PlayerMappings[playerNumber].ButtonBindingLookupTable[button]);
+        if (playerNumber > PlayerMappings.Count - 1 || playerNumber == 0)
+        {
+            return false;
+        }
+        return button switch
+        {
+            GamepadButton.None => false,
+            GamepadButton.LeftTriggerAsKey => GetAxisAsButtonDown(GamepadAxis.LeftTrigger, playerNumber),
+            GamepadButton.RightTriggerAsKey => GetAxisAsButtonDown(GamepadAxis.RightTrigger, playerNumber),
+            _ => Input.GetKeyDown(this.PlayerMappings[playerNumber].ButtonBindingLookupTable[button])
+        };
     }
 
     public bool GetButton(GamepadButton button, int playerNumber)
     {
-        return Input.GetKey(this.PlayerMappings[playerNumber].ButtonBindingLookupTable[button]);
+        if (playerNumber > PlayerMappings.Count - 1 || playerNumber == 0)
+        {
+            return false;
+        }
+
+        
+        return button switch
+        {
+            GamepadButton.None => false,
+            GamepadButton.LeftTriggerAsKey => GetAxisAsButton(GamepadAxis.LeftTrigger, playerNumber),
+            GamepadButton.RightTriggerAsKey => GetAxisAsButton(GamepadAxis.RightTrigger, playerNumber),
+            _ => Input.GetKey(this.PlayerMappings[playerNumber].ButtonBindingLookupTable[button])
+        };
     }
 
     public bool GetButtonUp(GamepadButton button, int playerNumber)
     {
-        return Input.GetKeyUp(this.PlayerMappings[playerNumber].ButtonBindingLookupTable[button]);
+        if (playerNumber > PlayerMappings.Count - 1 || playerNumber == 0)
+        {
+            return false;
+        }
+        
+        return button switch
+        {
+            GamepadButton.None => false,
+            GamepadButton.LeftTriggerAsKey => GetAxisAsButtonUp(GamepadAxis.LeftTrigger, playerNumber),
+            GamepadButton.RightTriggerAsKey => GetAxisAsButtonUp(GamepadAxis.RightTrigger, playerNumber),
+            _ => Input.GetKeyUp(this.PlayerMappings[playerNumber].ButtonBindingLookupTable[button])
+        };
     }
 
     #endregion Regular Buttons
@@ -266,6 +305,11 @@ public class InputHandler : MonoBehaviour
     /// <returns></returns>
     public bool GetAxisAsButtonDown(GamepadAxis axis, int playerNumber)
     {
+        if (playerNumber > PlayerMappings.Count - 1 || playerNumber == 0)
+        {
+            return false;
+        }
+        
         var mapping = this.AxisToButtonStates.Where(state => state.BelongingMapping == this.PlayerMappings[playerNumber] && state.Axis == axis && state.DoesAxisMatter == PositiveNegativeAxis.Indifferent).ToList();
         if (mapping.Count != 0)
         {
@@ -352,6 +396,11 @@ public class InputHandler : MonoBehaviour
 
     public bool GetAxisAsButtonUp(GamepadAxis axis, int playerNumber)
     {
+        if (playerNumber > PlayerMappings.Count - 1 || playerNumber == 0)
+        {
+            return false;
+        }
+        
         var mapping = this.AxisToButtonStates.Where(state => state.BelongingMapping == this.PlayerMappings[playerNumber] && state.Axis == axis && state.DoesAxisMatter == PositiveNegativeAxis.Indifferent).ToList();
         if (mapping.Count != 0)
         {
@@ -428,6 +477,11 @@ public class InputHandler : MonoBehaviour
 
     public float GetAxisValue(GamepadAxis axis, int playerNumber)
     {
+        if (playerNumber > PlayerMappings.Count - 1 || playerNumber == 0)
+        {
+            return 0;
+        }
+        
         if (this.PlayerMappings[playerNumber].OverridesAxisReading)
         {
             // Debug.Log($"--- (Get Axis Value) type {PlayerMappings[playerNumber].GetType()} - name = {PlayerMappings[playerNumber].AxisBindingLookupTable[axis].AxisName}");
@@ -466,6 +520,10 @@ public class InputHandler : MonoBehaviour
 
     public Vector2 GetCombinedAxis(GamepadAxis AxisX, GamepadAxis AxisY, int playerNumber, float deadZone = 0.0f)
     {
+        if (playerNumber > PlayerMappings.Count - 1 || playerNumber == 0)
+        {
+            return Vector2.zero;
+        }
         Vector2 VectorToReturn = new Vector2();
         if (this.PlayerMappings[playerNumber].OverridesAxisReading)
         {
